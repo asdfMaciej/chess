@@ -9,7 +9,6 @@ class Piece {
         Piece(Color color);
         Color getColor();
         virtual std::string getSymbol() = 0;
-        //virtual bool isMoveLegal() = 0;
 
     protected:
         Color color;
