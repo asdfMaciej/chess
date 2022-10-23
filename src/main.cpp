@@ -3,8 +3,14 @@
 Game::Game(): board(std::make_shared<StandardPieceFactory>()) {}
 
 void Game::run() {
-    this->board.movePiece({0, 0}, {4, 4});
+    Position from = {4, 4};
+    this->board.movePiece({7, 3}, from);
     this->board.printBoard();
+    std::vector<Position> positions = this->board.generateLegalMoves(from);
+    std::cout << "From: " << from << std::endl;
+    for (Position pos: positions) {
+        std::cout << "To: " << pos << std::endl;
+    }
 }
 
 

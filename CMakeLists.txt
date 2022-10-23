@@ -6,7 +6,7 @@ project(Chess VERSION 1.0
                   LANGUAGES CXX)
 
 # This sets the variable SOURCES to be the list of source files
-set(SOURCES src/main.cpp src/pieces.cpp src/board.cpp src/renderer.cpp)
+set(SOURCES src/main.cpp src/pieces.cpp src/board.cpp src/renderer.cpp src/constants.cpp)
 
 # This defines your project to build an executable 'my_exe' from the sources
 add_executable(main ${SOURCES})

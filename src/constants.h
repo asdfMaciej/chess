@@ -22,4 +22,6 @@ struct Position {
     int col;
 };
 
+std::ostream &operator<<(std::ostream &os, Position const &m);
+
 #endif

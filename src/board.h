@@ -27,9 +27,9 @@ class Board {
 
         void printBoard();
         bool movePiece(Position from, Position to);
+        std::vector<Position> generateLegalMoves(Position from); // TODO: switch to protected
 
     protected:
-        std::vector<Position> generateLegalMoves(Position from);
         bool isFriendlyPiece(Position pos);
         bool isFree(Position pos);
         bool isEnemyPiece(Position pos);
@@ -37,7 +37,7 @@ class Board {
 
         std::shared_ptr<BoardState> board;
 
-        Color turn;
+        Color turn = Color::White;
         Result result;
 };
 
