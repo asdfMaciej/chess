@@ -11,6 +11,7 @@ class Piece {
         //virtual Piece* clone() const = 0;
         Color getColor() const;
         virtual std::string getSymbol() = 0;
+        virtual int getId() = 0;
 
     protected:
         Color color;
@@ -23,6 +24,7 @@ class Pawn: public Piece {
         Pawn(const Pawn& other);
         //Piece* clone() const;
         std::string getSymbol();
+        int getId();
 };
 
 class Rook: public Piece {
@@ -31,6 +33,7 @@ class Rook: public Piece {
         Rook(const Rook& other);
         //Piece* clone() const;
         std::string getSymbol();
+        int getId();
 };
 
 class Knight: public Piece {
@@ -39,6 +42,7 @@ class Knight: public Piece {
         Knight(const Knight& other);
         //Piece* clone() const;
         std::string getSymbol();
+        int getId();
 };
 
 class Bishop: public Piece {
@@ -47,6 +51,7 @@ class Bishop: public Piece {
         Bishop(const Bishop& other);
         //Piece* clone() const;
         std::string getSymbol();
+        int getId();
 };
 
 class Queen: public Piece {
@@ -55,6 +60,7 @@ class Queen: public Piece {
         Queen(const Queen& other);
         //Piece* clone() const;
         std::string getSymbol();
+        int getId();
 };
 
 class King: public Piece {
@@ -63,6 +69,7 @@ class King: public Piece {
         King(const King& other);
         //Piece* clone() const;
         std::string getSymbol();
+        int getId();
 };
 
 class AbstractPieceFactory {

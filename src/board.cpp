@@ -36,6 +36,10 @@ std::unique_ptr<Piece> BoardState::set(Position pos, std::unique_ptr<Piece> piec
     return old;
 }
 
+Piece* Board::get(Position pos) {
+    return this->board->get(pos);
+}
+
 Piece* BoardState::get(Position pos) {
     if (!this->board[pos.row][pos.col]) {
         return nullptr;

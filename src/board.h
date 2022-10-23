@@ -26,6 +26,7 @@ class Board {
         Board(std::shared_ptr<AbstractPieceFactory> pieceFactory);
 
         void printBoard();
+        Piece* get(Position pos);
         bool movePiece(Position from, Position to);
         std::vector<Position> generateLegalMoves(Position from); // TODO: switch to protected
 

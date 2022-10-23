@@ -12,6 +12,13 @@ std::string Bishop::getSymbol() {return "Bishop";}
 std::string Queen::getSymbol() {return "Queen";}
 std::string King::getSymbol() {return "King";}
 
+int Pawn::getId() {return 0 + ((this->color == Color::Black) ? 6 : 0);}
+int Rook::getId() {return 1 + ((this->color == Color::Black) ? 6 : 0);}
+int Knight::getId() {return 2 + ((this->color == Color::Black) ? 6 : 0);}
+int Bishop::getId() {return 3 + ((this->color == Color::Black) ? 6 : 0);}
+int Queen::getId() {return 4 + ((this->color == Color::Black) ? 6 : 0);}
+int King::getId() {return 5 + ((this->color == Color::Black) ? 6 : 0);}
+
 /*Piece* Pawn::clone() const {return new Pawn(*this);}
 Piece* Rook::clone() const {return new Rook(*this);}
 Piece* Knight::clone() const {return new Knight(*this);}

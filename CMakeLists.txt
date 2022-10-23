@@ -11,9 +11,6 @@ FetchContent_Declare(SFML
     GIT_TAG 2.6.x)
 FetchContent_MakeAvailable(SFML)
 
-
-
-
 # This sets the variable SOURCES to be the list of source files
 set(SOURCES src/main.cpp src/pieces.cpp src/board.cpp src/renderer.cpp src/constants.cpp)
 
@@ -23,9 +20,9 @@ add_executable(Chess ${SOURCES})
 target_link_libraries(Chess PRIVATE sfml-graphics)
 target_compile_features(Chess PRIVATE cxx_std_17)
 
-#if (WIN32 AND BUILD_SHARED_LIBS)
-#    add_custom_command(TARGET Chess POST_BUILD
-#        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_RUNTIME_DLLS:Chess> $<TARGET_FILE_DIR:Chess> COMMAND_EXPAND_LISTS)
-#endif()
+file(COPY img DESTINATION .)
 
-#install(TARGETS Chess)
+if (WIN32 AND BUILD_SHARED_LIBS)
+    add_custom_command(TARGET Chess POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_RUNTIME_DLLS:Chess> $<TARGET_FILE_DIR:Chess> COMMAND_EXPAND_LISTS)
+endif()
