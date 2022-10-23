@@ -6,6 +6,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <SFML/Graphics.hpp>
 
 const int BOARD_SIZE = 8;
 
