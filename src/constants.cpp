@@ -12,3 +12,7 @@ std::ostream &operator<<(std::ostream &os, Position const &m) {
     else if (m.col == 7) pos = "h";
     return os << pos << 8 - m.row;
 }
+
+bool operator==(const Position& lhs, const Position& rhs) {
+    return lhs.col == rhs.col && lhs.row == rhs.row;
+}

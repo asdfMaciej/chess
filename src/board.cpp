@@ -72,9 +72,23 @@ void Board::printBoard() {
 
 
 bool Board::movePiece(Position from, Position to) {
-    return this->board->movePiece(from, to);
+    std::vector<Position> legalMoves = this->generateLegalMoves(from);
+    bool canMove = false;
+    for (Position pos: legalMoves) {
+        canMove = canMove || (pos == to);
+    }
+
+    if (canMove) {
+        this->board->movePiece(from, to);
+        this->turn = (this->turn == Color::White) ? Color::Black : Color::White;
+    }
+    
+    return canMove;
 }
 
+Color Board::getTurn() {
+    return this->turn;
+}
 
 std::vector<Position> Board::generateLegalMoves(Position from) {
     std::vector<Position> legalMoves;
@@ -109,9 +123,13 @@ std::vector<Position> Board::generateLegalMoves(Position from) {
         const int startingRow = this->turn == Color::White ? 6 : 1;
         const int direction = this->turn == Color::White ? -1 : 1;
 
-        addMove({from.row + direction, from.col});
-        if (from.row == startingRow)
-            addMove({from.row + (direction * 2), from.col});
+        const Position ahead = {from.row + direction, from.col};
+        const Position aheadTwo = {from.row + (direction * 2), from.col};
+        if (isLegalMove(ahead) && this->isFree(ahead))
+            addMove(ahead);
+        
+        if (from.row == startingRow && isLegalMove(aheadTwo) && this->isFree(aheadTwo))
+            addMove(aheadTwo);
         
         const Position leftCrosswise = {from.row + direction, from.col - 1};
         const Position rightCrosswise = {from.row + direction, from.col + 1};

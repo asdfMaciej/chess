@@ -28,6 +28,7 @@ class Board {
         void printBoard();
         Piece* get(Position pos);
         bool movePiece(Position from, Position to);
+        Color getTurn();
         std::vector<Position> generateLegalMoves(Position from); // TODO: switch to protected
 
     protected:

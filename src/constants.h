@@ -6,6 +6,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <cmath>
 #include <SFML/Graphics.hpp>
 
 const int BOARD_SIZE = 8;
@@ -24,5 +25,6 @@ struct Position {
 };
 
 std::ostream &operator<<(std::ostream &os, Position const &m);
+bool operator==(const Position& lhs, const Position& rhs);
 
 #endif
