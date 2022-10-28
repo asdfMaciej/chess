@@ -15,6 +15,8 @@ class BoardState {
         Piece* get(Position pos);
         std::unique_ptr<Piece> set(Position pos, std::unique_ptr<Piece> piece);
         bool movePiece(Position from, Position to);
+        std::unique_ptr<Piece> clonePiece(Piece* piece);
+        Position getKingPosition(Color color);
 
     protected:
         std::unique_ptr<Piece> board[BOARD_SIZE][BOARD_SIZE];
@@ -26,15 +28,16 @@ class Board {
         Board(std::shared_ptr<AbstractPieceFactory> pieceFactory);
 
         void printBoard();
+        std::shared_ptr<BoardState> getBoardState();
         Piece* get(Position pos);
-        bool movePiece(Position from, Position to);
         Color getTurn();
-        std::vector<Position> generateLegalMoves(Position from); // TODO: switch to protected
+        Result getResult();
+        bool movePiece(Position from, Position to);
+        std::vector<Position> generateLegalMoves(Position from, std::shared_ptr<BoardState> board);
+        std::vector<Position> generateAllMoves(Position from, std::shared_ptr<BoardState> board);
 
     protected:
-        bool isFriendlyPiece(Position pos);
         bool isFree(Position pos);
-        bool isEnemyPiece(Position pos);
         bool isInsideBoard(Position pos);
 
         std::shared_ptr<BoardState> board;

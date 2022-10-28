@@ -16,7 +16,7 @@ enum class Color {
 };
 
 enum class Result {
-    Playing, Check, Checkmate, Stalemate
+    Playing, Check, Checkmate, Stalemate, InvalidPosition
 };
 
 struct Position {

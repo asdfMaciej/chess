@@ -19,21 +19,6 @@ int Bishop::getId() {return 3 + ((this->color == Color::Black) ? 6 : 0);}
 int Queen::getId() {return 4 + ((this->color == Color::Black) ? 6 : 0);}
 int King::getId() {return 5 + ((this->color == Color::Black) ? 6 : 0);}
 
-/*Piece* Pawn::clone() const {return new Pawn(*this);}
-Piece* Rook::clone() const {return new Rook(*this);}
-Piece* Knight::clone() const {return new Knight(*this);}
-Piece* Bishop::clone() const {return new Bishop(*this);}
-Piece* Queen::clone() const {return new Queen(*this);}
-Piece* King::clone() const {return new King(*this);}*/
-
-Piece::Piece() {}
-Pawn::Pawn(const Pawn& other) {this->color = other.color;}
-Rook::Rook(const Rook& other) {this->color = other.color;}
-Knight::Knight(const Knight& other) {this->color = other.color;}
-Bishop::Bishop(const Bishop& other) {this->color = other.color;}
-Queen::Queen(const Queen& other) {this->color = other.color;}
-King::King(const King& other) {this->color = other.color;}
-
 std::unique_ptr<Piece> StandardPieceFactory::getPiece(int row, int column) {
     Color color = (row <= 3) ? Color::Black : Color::White;
 

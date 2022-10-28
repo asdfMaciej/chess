@@ -92,7 +92,7 @@ void Game::run() {
         pieces.push_back(currentTurn);
 
         if (currentState == GameState::Selected) {
-            std::vector<Position> legalMoves = this->board.generateLegalMoves(selectedPosition);
+            std::vector<Position> legalMoves = this->board.generateLegalMoves(selectedPosition, this->board.getBoardState());
             legalMoves.push_back(selectedPosition);
 
             for (Position pos: legalMoves) {
@@ -104,6 +104,14 @@ void Game::run() {
             }
         }
         
+        Result gameResult = this->board.getResult();
+        if (gameResult == Result::Playing) std::cout << "[*] Playing" << std::endl;
+        else if (gameResult == Result::Stalemate) std::cout << "[*] Stalemate" << std::endl;
+        else if (gameResult == Result::Checkmate) std::cout << "[*] Checkmate" << std::endl;
+        else if (gameResult == Result::Check) std::cout << "[*] Check" << std::endl;
+        else if (gameResult == Result::InvalidPosition) std::cout << "[*] Invalid position" << std::endl;
+        
+        // todo: act upon result
     };
     
     updateBoard();
@@ -117,7 +125,7 @@ void Game::run() {
                 window.close();
             
             if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
-                sf::Vector2f v = {event.mouseButton.x, event.mouseButton.y};
+                sf::Vector2f v = {(float) event.mouseButton.x, (float) event.mouseButton.y};
                 Position clickedPos = _pos(v);
 
                 if (currentState == GameState::NotSelected) {
