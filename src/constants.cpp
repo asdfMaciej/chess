@@ -16,3 +16,7 @@ std::ostream &operator<<(std::ostream &os, Position const &m) {
 bool operator==(const Position& lhs, const Position& rhs) {
     return lhs.col == rhs.col && lhs.row == rhs.row;
 }
+
+std::ostream &operator<<(std::ostream &os, Move const &m) {
+    return os << m.piece << ": " << m.from << " to " << m.to;
+}

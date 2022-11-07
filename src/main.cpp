@@ -17,9 +17,7 @@ enum class GameState {
 };
 
 void Game::run() {
-    this->board.movePiece({7, 3}, {4, 4});
-
-    sf::RenderWindow window(sf::VideoMode(60*8, 60*9), "Chess");
+    sf::RenderWindow window(sf::VideoMode(60*(BOARD_SIZE + 2), 60*(BOARD_SIZE + 1)), "Chess");
     window.setFramerateLimit(60);
 
     // Load textures
@@ -57,7 +55,22 @@ void Game::run() {
     turnText.setString("Turn:");
     turnText.setCharacterSize(24);
     turnText.setFillColor(sf::Color::Black);
-    turnText.setPosition({0, 60 * 8});
+    turnText.setPosition({0, 60 * BOARD_SIZE});
+
+    sf::Text statusText;
+    statusText.setFont(font);
+    statusText.setString("Good luck!");
+    statusText.setCharacterSize(24);
+    statusText.setFillColor(sf::Color::Black);
+    statusText.setPosition({60 * 3, 60 * BOARD_SIZE});
+
+    std::stringstream moveBuffer;
+    sf::Text moveHistory;
+    moveHistory.setFont(font);
+    moveHistory.setString("");
+    moveHistory.setCharacterSize(14);
+    moveHistory.setFillColor(sf::Color::Black);
+    moveHistory.setPosition({60 * BOARD_SIZE, 0});
 
     sf::Sprite boardSprite;
     boardSprite.setTexture(boardTexture);
@@ -105,13 +118,20 @@ void Game::run() {
         }
         
         Result gameResult = this->board.getResult();
-        if (gameResult == Result::Playing) std::cout << "[*] Playing" << std::endl;
-        else if (gameResult == Result::Stalemate) std::cout << "[*] Stalemate" << std::endl;
-        else if (gameResult == Result::Checkmate) std::cout << "[*] Checkmate" << std::endl;
-        else if (gameResult == Result::Check) std::cout << "[*] Check" << std::endl;
-        else if (gameResult == Result::InvalidPosition) std::cout << "[*] Invalid position" << std::endl;
-        
-        // todo: act upon result
+        if (gameResult == Result::Playing) statusText.setString("Playing");
+        else if (gameResult == Result::Stalemate) statusText.setString("Stalemate");
+        else if (gameResult == Result::Checkmate) {statusText.setString("Checkmate"); statusText.setFillColor(sf::Color::Red);}
+        else if (gameResult == Result::Check) statusText.setString("Check");
+        else if (gameResult == Result::InvalidPosition) statusText.setString("Invalid position");
+
+        moveBuffer.str("");
+        moveBuffer.clear();
+        for (Move move: this->moveHistory) {
+            moveBuffer << move << std::endl;
+            std::cout << move << std::endl;
+        }
+
+        moveHistory.setString(moveBuffer.str());
     };
     
     updateBoard();
@@ -135,8 +155,16 @@ void Game::run() {
                         currentState = GameState::Selected;
                     }
                 } else if (currentState == GameState::Selected) {
-                    this->board.movePiece(selectedPosition, clickedPos);
+                    bool moved = this->board.movePiece(selectedPosition, clickedPos);
                     currentState = GameState::NotSelected;
+                    if (moved) {
+                        Piece* movedPiece = this->board.get(clickedPos);
+                        if (movedPiece) {
+                            this->moveHistory.push_back({selectedPosition, clickedPos, movedPiece->getSymbol()});
+                        } else {
+                            std::cout << "This should never be null, error" << std::endl;
+                        }
+                    }
                 }
 
                 updateBoard();
@@ -146,6 +174,8 @@ void Game::run() {
         window.clear(sf::Color(255, 255, 255));
         window.draw(boardSprite);
         window.draw(turnText);
+        window.draw(statusText);
+        window.draw(moveHistory);
 
         for (sf::RectangleShape sprite: availableMoves) {
             window.draw(sprite);
@@ -165,6 +195,5 @@ int main(int argc, char const *argv[])
     Game game;
     game.run();
 
-    // Pawn copied = pawn;
     return 0;
 }

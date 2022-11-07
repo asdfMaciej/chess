@@ -104,6 +104,8 @@ void Board::printBoard() {
 
 
 bool Board::movePiece(Position from, Position to) {
+    // Returns true if the piece was moved
+
     // Check if the to position is legal
     std::vector<Position> legalMoves = this->generateLegalMoves(from, this->board);
     bool toMoveIsLegal = false;
@@ -232,8 +234,8 @@ std::vector<Position> Board::generateAllMoves(Position from, std::shared_ptr<Boa
     };  
 
     if (dynamic_cast<Pawn*>(fromPiece) != nullptr) {
-        const int startingRow = this->turn == Color::White ? 6 : 1;
-        const int direction = this->turn == Color::White ? -1 : 1;
+        const int startingRow = friendlyColor == Color::White ? 6 : 1;
+        const int direction = friendlyColor == Color::White ? -1 : 1;
 
         const Position ahead = {from.row + direction, from.col};
         const Position aheadTwo = {from.row + (direction * 2), from.col};
@@ -245,7 +247,7 @@ std::vector<Position> Board::generateAllMoves(Position from, std::shared_ptr<Boa
         
         const Position leftCrosswise = {from.row + direction, from.col - 1};
         const Position rightCrosswise = {from.row + direction, from.col + 1};
-        // TODO BUG: King can walk into pawns
+
         if (isLegalMove(leftCrosswise) && isEnemyPiece(leftCrosswise))
             addMove(leftCrosswise);
         

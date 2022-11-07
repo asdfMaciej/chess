@@ -5,6 +5,7 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#include <sstream>
 #include <vector>
 #include <cmath>
 #include <SFML/Graphics.hpp>
@@ -24,6 +25,13 @@ struct Position {
     int col;
 };
 
+struct Move {
+    Position from;
+    Position to;
+    std::string piece;
+};
+
+std::ostream &operator<<(std::ostream &os, Move const &m);
 std::ostream &operator<<(std::ostream &os, Position const &m);
 bool operator==(const Position& lhs, const Position& rhs);
 

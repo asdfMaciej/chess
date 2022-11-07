@@ -13,6 +13,7 @@ class Game {
     protected:
         Board board;
         Renderer renderer;
+        std::vector<Move> moveHistory;
 };
 
 #endif
